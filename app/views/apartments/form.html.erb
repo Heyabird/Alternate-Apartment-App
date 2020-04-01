@@ -1,15 +1,15 @@
-	<%= form_with(model: apartment, local: true) do |form| %>
-	  <% if apartment.errors.any? %>
-	    <div id="error_explanation">
-	      <h2><%= pluralize(apartment.errors.count, "error") %> prohibited this apartment from being saved:</h2>
+	<%#= form_with(model: apartment, local: true) do |form| %>
+	  <%# if apartment.errors.any? %>
+	    <%# <div id="error_explanation"> %>
+	      <%# <h2><%= pluralize(apartment.errors.count, "error") %> prohibited this apartment from being saved:</h2> %>
 
-	      <ul>
-	      <% apartment.errors.full_messages.each do |message| %>
-	        <li><%= message %></li>
-	      <% end %>
-	      </ul>
-	    </div>
-	  <% end %>
+	      <%# <ul> %>
+	      <%# apartment.errors.full_messages.each do |message| %>
+	        <li><%#= message %></li>
+	      <%# end %>
+	      <%# </ul> %>
+	    <%# </div> %>
+	  <%# end %>
 
 	<h1>This is the form </h1>
 	  <div class="field">

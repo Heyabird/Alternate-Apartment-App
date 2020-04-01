@@ -1,6 +1,10 @@
 class ApartmentsController < ApplicationController
     before_action :set_apartment, only: [:show, :edit, :update, :destroy]
     before_action :authenticate_user!
+    skip_before_action :verify_authenticity_token
+    
+    def new
+    end
     
     def index
         apartments = Apartment.all
@@ -21,8 +25,6 @@ class ApartmentsController < ApplicationController
         end
     end
 
-    def new
-    end
 
     private
     def apartment_params

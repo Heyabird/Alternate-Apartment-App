@@ -1,1 +1,14 @@
-<h1>This is the new </h1>
+
+
+<h1>Add a new apartment</h1>
+
+
+<%= form_with url: "/apartments", local: true do %>
+  <label for="title">Title</label>
+  <input type="text" name="title">
+  <br>
+  <label for="contact_name">Contact Name</label>
+  <input name="contact_name"></textarea>
+  <br>
+  <input type="submit" value="submit">
+<% end %>

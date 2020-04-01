@@ -1,49 +1,38 @@
 import React, {Component} from "react"
 import { ListGroup, Button }
  from 'reactstrap'; 
-import apts from './apts'
 import {Link, Route, BrowserRouter as Router, Switch} from "react-router-dom"
 import AptShow from "./AptShow"
 import TurtleShell from './turtleshell.jpg'
+import Pineapple from './pineapple.jpg'
 
 class AptIndex extends Component{ 
     render(){
+
+        console.log(this.props.apartments)
+
         const {
-            apts,
+            apartments,
             new_apt_route
           } = this.props
 
           return(
                 <>
-                    
+                {apartments &&
                     <div id="list">
-                        {apts.map((apt, index) => {
+                        {apartments.map((apt, index) => {
                             return(
                             <ListGroup id="item" key={ index }>
-                                <Link to={`/apt/${apt.id}`}><h4 id= "name"> { apt.name }</h4></Link>
+                                <a href={`/apt/${apt.id}`}>{apt.city}<h4 id= "name"> { apt.street }</h4></a>
                                 <br/>
-                                <img src={TurtleShell}/>
+                                <img src={ TurtleShell }/>
                                 <br/>
-                                <small>Address: { apt.street }  </small>
-                                <small>Contact: { apt.manager_name } </small>
+                                <small>{ apt.city }</small>
                             </ListGroup>
                             )
                         })}
                     </div>
-                    {/* <>
-                    <div>        
-                        <br/>
-                        <img src={TurtleShell}/>
-                        <h6>Address: 7556 Charmant Dr  </h6>
-                        <h6>Contact: Heya Kwon </h6>
-                    </div>
-                    <div>        
-                        <br/>
-                        <img src={TurtleShell}/>
-                        <h6>Address: 7556 Charmant Dr  </h6>
-                        <h6>Contact: Heya Kwon </h6>
-                    </div>
-                </> */}
+                     }
                 </>
           )}}
 

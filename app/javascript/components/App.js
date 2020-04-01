@@ -6,19 +6,56 @@ import style from '../../assets/stylesheets/style.css'
 import Header from './components/Header'
 import AptIndex from './pages/AptIndex'
 import AptShow from './pages/AptShow'
-import apts from './pages/apts'
 import Login from './pages/Login'
+import NewApartment from './pages/NewApartment'
+
+// Importing Mock Data:
+// import mock_apartments from './pages/apts'
+// import apartments from '/apartments'
 
 
 class App extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      apts: apts,
+      // ap: mock_apartments,
+      apartments: [],
+      error: null,
     }
+    this.getApartments()
   }
 
+  // methods 
+
+  getApartments = () => {
+    fetch("/apartments")
+    .then( response => {
+      return response.json()
+    })
+    .then( apartments => {
+      this.setState({apartments})
+    })
+  }
+
+  createApartment = (attrs) =>{
+    return fetch("/apartments", {
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({apartment: attrs})
+    })
+    .then(response => {
+      if(response.status === 201){
+        this.getApartments()
+      }
+    })
+  }
+
+
   render () {
+
+
     const {
       logged_in,
       sign_in_route,
@@ -26,13 +63,18 @@ class App extends React.Component {
       new_apt_route
     } = this.props
 
+    // destructure
+    const{ apartments, error, apts } = this.state 
+
+
+    console.log("App.js", apartments)
+
     return (
       <Router >
         <div>
         <Header/>
-        <a href={new_apt_route}>Add New</a>
-
-
+        <Link to="/new-apartment" >New Apartment</Link>
+        
         {logged_in &&
           <div>
             <a href={sign_out_route}>Sign Out</a>
@@ -46,9 +88,14 @@ class App extends React.Component {
         }        
 
        
+          <Route path="/new-apartment" render={ (props) => {
+                  return(
+                    <NewApartment {...props} onSubmit={this.createApartment} /> 
+                    )}} />
+          <Route exact path="/" render={ (props) => <AptIndex apartments={this.state.apartments}  /> } />
+          {/* <Route exact path="/apartments" render= {this.state.apts} /> */}
+          <Route exact path="/apt/:id" render={ (props) => <AptShow {...props} apts={ apartments }/> }/>
 
-          <Route exact path="/" render={ (props) => <AptIndex apts={ this.state.apts } /> } />
-          <Route exact path="/apt/:id" render={ (props) => <AptShow {...props} apts={ this.state.apts }/> }/>
         </div>
       </Router>
 
