@@ -19,10 +19,13 @@ class ApartmentsController < ApplicationController
                 format.json { render json: @apartment.errors, status: :unprocessable_entity }
             end
         end
-        end
+    end
+
+    def new
+    end
 
     private
     def apartment_params
-        params.require(:apartment).permit(:street, :city)
+        params.require(:apartment).permit(:street, :city, :state, :postal_code, :manager_name, :manager_contact, :manager_contact_hours)
     end
 end

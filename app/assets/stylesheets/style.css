@@ -1,3 +1,32 @@
+
 body {
     font-family: 'Roboto mono';
+    margin-left: 30px;
+}
+
+h3{
+}
+
+img {
+    width: 200px;
+}
+
+#list {
+    display: inline-block;
+    margin: 50px;
+}
+
+#item {
+    display: inline-block;
+    border: 1px solid black;
+    margin: 20px;
+
+}
+
+#addnew {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 3.5em;
+    background-color: rgb(255, 81, 0);
 }
