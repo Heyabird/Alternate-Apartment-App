@@ -24,6 +24,9 @@ class App extends React.Component {
       error: null,
     }
     this.getApartments()
+    // this.handleDelete = this.handleDelete.bind(this),
+    // this.deleteApartment = this.deleteApartment.bind(this)
+
   }
 
   // methods 
@@ -57,17 +60,17 @@ class App extends React.Component {
     console.log("editing", id, attrs) 
   }
 
-  // handleDelete(id){
-  //   fetch(`http://localhost:3000/apt/${id}`, 
-  //   {
-  //     method: 'DELETE',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }).then((response) => { 
-  //       console.log('Item was deleted!')
-  //     })
-  // }
+  handleDelete(id){
+    fetch(`http://localhost:3000/apt/${id}`, 
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => { 
+        this.deleteFruit(id)
+      })
+  }
 
   render () {
 
@@ -109,7 +112,7 @@ class App extends React.Component {
                     )}} />
           <Route exact path="/" render={ (props) => <AptIndex apartments={this.state.apartments}  /> } />
           {/* <Route exact path="/apartments" render= {this.state.apts} /> */}
-          <Route exact path="/apt/:id" render={ (props) => <AptShow {...props} apts={ apartments }/> }/>
+          <Route exact path="/apt/:id" render={ (props) => <AptShow {...props} apts={ apartments } handleDelete={this.handleDelete}/> }/>
           <Route path= "/edit-apartment/:id" render={ (props) => {
                   return(
                     <EditApartment
