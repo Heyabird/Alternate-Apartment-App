@@ -22,6 +22,7 @@ class App extends React.Component {
       // ap: mock_apartments,
       apartments: [],
       error: null,
+      delete: false
     }
     this.getApartments()
     // this.handleDelete = this.handleDelete.bind(this),
@@ -60,7 +61,8 @@ class App extends React.Component {
     console.log("editing", id, attrs) 
   }
 
-  handleDelete(id){
+  handleDelete(){
+    const { id } = this.match.params
     fetch(`http://localhost:3000/apt/${id}`, 
     {
       method: 'DELETE',
@@ -68,8 +70,16 @@ class App extends React.Component {
         'Content-Type': 'application/json'
       }
     }).then((response) => { 
-        this.deleteFruit(id)
+        this.deleteApartment(id)
+        this.setState({ delete: true })
       })
+  }
+
+  deleteApartment(id) {
+    newApartments = this.state.apartments.filter((apt) => apt.id !== id)
+    this.setState({
+      apartments: newApartments
+    })
   }
 
   render () {

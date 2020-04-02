@@ -34,6 +34,7 @@ class AptShow extends Component {
                     <br/>
                     <small>Contact hours:{ apt.manager_contact_hours}</small>
                     <br/>
+                    {/* <Link to={`/apt/${apt.id}`}>Test</Link> */}
                     <Link to={`/edit-apartment/${apt.id}`}>Edit</Link>
                     <Button onClick={() => this.props.handleDelete(apt.id)} >Delete</Button>
 
