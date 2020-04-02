@@ -33,13 +33,15 @@ class AptShow extends Component {
                     <small> at { apt.manager_contact } </small>
                     <br/>
                     <small>Contact hours:{ apt.manager_contact_hours}</small>
+                    <br/>
+                    <Link to={`/edit-apartment/${apt.id}`}>Edit</Link>
+
+
 
                 </div>
                 </ListGroup>
                 <br/>
                 <br/>
-                <Button>Edit</Button> &nbsp;
-                <Button>Delete</Button>
             </div>
         </div>
         }

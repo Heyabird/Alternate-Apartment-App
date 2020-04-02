@@ -8,6 +8,7 @@ import AptIndex from './pages/AptIndex'
 import AptShow from './pages/AptShow'
 import Login from './pages/Login'
 import NewApartment from './pages/NewApartment'
+import EditApartment from './pages/EditApartment'
 
 // Importing Mock Data:
 // import mock_apartments from './pages/apts'
@@ -52,6 +53,10 @@ class App extends React.Component {
     })
   }
 
+  editApartment = (id, attrs) => {
+    console.log("editing", id, attrs) 
+    
+  }
 
   render () {
 
@@ -60,7 +65,6 @@ class App extends React.Component {
       logged_in,
       sign_in_route,
       sign_out_route,
-      new_apt_route
     } = this.props
 
     // destructure
@@ -74,7 +78,7 @@ class App extends React.Component {
         <div>
         <Header/>
         <Link to="/new-apartment" >New Apartment</Link>
-        
+
         {logged_in &&
           <div>
             <a href={sign_out_route}>Sign Out</a>
@@ -95,6 +99,13 @@ class App extends React.Component {
           <Route exact path="/" render={ (props) => <AptIndex apartments={this.state.apartments}  /> } />
           {/* <Route exact path="/apartments" render= {this.state.apts} /> */}
           <Route exact path="/apt/:id" render={ (props) => <AptShow {...props} apts={ apartments }/> }/>
+          <Route path= "/edit-apartment/:id" render={ (props) => {
+                  return(
+                    <EditApartment
+                      {...props}
+                      onSubmit={this.editApartment}
+                    /> )
+                  }} />
 
         </div>
       </Router>
