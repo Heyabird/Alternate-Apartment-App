@@ -55,8 +55,19 @@ class App extends React.Component {
 
   editApartment = (id, attrs) => {
     console.log("editing", id, attrs) 
-    
   }
+
+  // handleDelete(id){
+  //   fetch(`http://localhost:3000/apt/${id}`, 
+  //   {
+  //     method: 'DELETE',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then((response) => { 
+  //       console.log('Item was deleted!')
+  //     })
+  // }
 
   render () {
 
