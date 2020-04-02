@@ -22,7 +22,7 @@ class App extends React.Component {
       // ap: mock_apartments,
       apartments: [],
       error: null,
-      delete: false
+      delete_success: false
     }
     this.getApartments()
     // this.handleDelete = this.handleDelete.bind(this),
@@ -30,6 +30,10 @@ class App extends React.Component {
 
   }
 
+  // activate get apartments after everything loads
+  componentDidMount(){
+    this.getApartments()
+  }
   // methods 
 
   getApartments = () => {
@@ -61,26 +65,43 @@ class App extends React.Component {
     console.log("editing", id, attrs) 
   }
 
-  handleDelete(){
-    const { id } = this.match.params
-    fetch(`http://localhost:3000/apt/${id}`, 
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => { 
-        this.deleteApartment(id)
-        this.setState({ delete: true })
-      })
-  }
+  // handleDelete(){
+    
+  //   fetch(`/apt/${id}`, 
+  //   {
+  //     method: 'DELETE',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then((response) => { 
+  //       this.deleteApartment(id)
+  //       this.setState({ delete: true })
+  //     })
+  // }
 
-  deleteApartment(id) {
-    newApartments = this.state.apartments.filter((apt) => apt.id !== id)
-    this.setState({
-      apartments: newApartments
-    })
-  }
+  // deleteApartment(id) {
+  //   newApartments = this.state.apartments.filter((apt) => apt.id !== id)
+  //   this.setState({
+  //     apartments: newApartments
+  //   })
+  // }
+
+  handleDelete = (id) => {
+    fetch(`/apartmentt/${id}`, {
+      method: 'DELETE',
+       headers: {
+         'Content-Type': 'application/json'
+         }
+       }
+     ).then((response) => {
+       if(response.ok){
+         alert("this apartment is deleted")
+         this.setState({ delete_success: true })
+         return this.getApartments()
+       }
+     })
+    }
+
 
   render () {
 
@@ -122,7 +143,7 @@ class App extends React.Component {
                     )}} />
           <Route exact path="/" render={ (props) => <AptIndex apartments={this.state.apartments}  /> } />
           {/* <Route exact path="/apartments" render= {this.state.apts} /> */}
-          <Route exact path="/apt/:id" render={ (props) => <AptShow {...props} apts={ apartments } handleDelete={this.handleDelete}/> }/>
+          <Route exact path="/apartment/:id" render={ (props) => <AptShow {...props} apts={ apartments } handleDelete={this.handleDelete}/> }/>
           <Route path= "/edit-apartment/:id" render={ (props) => {
                   return(
                     <EditApartment

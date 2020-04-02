@@ -28,10 +28,10 @@ class ApartmentsController < ApplicationController
     def destroy
         @apartment = Apartment.find(params[:id])
         if @apartment.destroy
-            render json: @guitar
+            render json: @apartment
        
         else
-            render json: @guitar.errors
+            render json: @apartment.errors
     end
 
     def update

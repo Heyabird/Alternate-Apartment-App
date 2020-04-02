@@ -12,6 +12,8 @@ class AptShow extends Component {
         const apt = this.props.apts.find((v) => v.id === parseInt(id))
         const apts_route = this.props
         console.log(apt)
+
+        
     return (
         <>
         {/* "Poor man's if statement" */}
@@ -35,7 +37,8 @@ class AptShow extends Component {
                     <small>Contact hours:{ apt.manager_contact_hours}</small>
                     <br/>
                     {/* <Link to={`/apt/${apt.id}`}>Test</Link> */}
-                    <Link to={`/edit-apartment/${apt.id}`}>Edit</Link>
+                    <Button><Link to={`/edit-apartment/${apt.id}`}>Edit</Link></Button>
+                    <br/>
                     <Button onClick={() => this.props.handleDelete(apt.id)} >Delete</Button>
 
 
