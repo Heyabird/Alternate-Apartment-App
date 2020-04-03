@@ -8,7 +8,7 @@ class ApartmentsController < ApplicationController
     
     def index
         @apartments = Apartment.all
-        render json: apartments
+        render json: @apartments
     end
 
     def create
@@ -26,18 +26,19 @@ class ApartmentsController < ApplicationController
     end
 
     def destroy
-        @apartment = Apartment.find(params[:id])
-        if @apartment.destroy
-            render json: @apartment
-       
-        else
-            render json: @apartment.errors
-    end
+        Apartment.destroy(params[:id])
+      end
 
     def update
         apartment = Apartment.find(params[:id])
         apartment.update_attributes(apartment_params)
         render json: apartment
+    end
+
+    def show
+        @apartment = Apartment.find(params[:id])
+        # @user = User.find(@apartment.user_id)
+        render json: @apartment
     end
 
     # def update
@@ -55,4 +56,7 @@ class ApartmentsController < ApplicationController
     def apartment_params
         params.require(:apartment).permit(:street, :city, :state, :postal_code, :manager_name, :manager_contact, :manager_contact_hours)
     end
+    def set_apartment
+        @apartment =Apartment.find(params[:id])
+      end
 end

@@ -22,7 +22,8 @@ class App extends React.Component {
       // ap: mock_apartments,
       apartments: [],
       error: null,
-      delete_success: false
+      delete_success: false,
+      editable: null
     }
     this.getApartments()
     // this.handleDelete = this.handleDelete.bind(this),
@@ -61,33 +62,44 @@ class App extends React.Component {
     })
   }
 
-  editApartment = (id, attrs) => {
-    console.log("editing", id, attrs) 
+  // editApartment = (id, attrs) => {
+  //   console.log("editing", id, attrs) 
+  // }
+
+  handleEdit = (id) => {
+    if(this.state.editable == id){
+      this.setState({ editable: null })
+      let street = this.street.value
+      let city = this.city.value
+      // let state = this.states.value
+      // let postal_code = this.postal_code.value
+      // let country = this.country.value
+      let apartment = { street: street, city: city}
+      this.handleUpdate(apartment, id)
+    }else{
+    this.setState({
+      editable: id
+    })}
   }
 
-  // handleDelete(){
-    
-  //   fetch(`/apt/${id}`, 
-  //   {
-  //     method: 'DELETE',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }).then((response) => { 
-  //       this.deleteApartment(id)
-  //       this.setState({ delete: true })
-  //     })
-  // }
+  handleUpdate = (apartment, id) => {
+    fetch(`/apartments/${id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify({apartment: apartment}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+        this.setState({ success: true })
+        return this.props.getApartments()
+      })
+  }
 
-  // deleteApartment(id) {
-  //   newApartments = this.state.apartments.filter((apt) => apt.id !== id)
-  //   this.setState({
-  //     apartments: newApartments
-  //   })
-  // }
+
 
   handleDelete = (id) => {
-    fetch(`/apartmentt/${id}`, {
+    fetch(`/apartments/${id}`, {
       method: 'DELETE',
        headers: {
          'Content-Type': 'application/json'
@@ -98,6 +110,7 @@ class App extends React.Component {
          alert("this apartment is deleted")
          this.setState({ delete_success: true })
          return this.getApartments()
+         console.log("delete attempt!")
        }
      })
     }
@@ -110,6 +123,7 @@ class App extends React.Component {
       logged_in,
       sign_in_route,
       sign_out_route,
+      apartment_route
     } = this.props
 
     // destructure
@@ -121,10 +135,10 @@ class App extends React.Component {
     return (
       <Router >
         <div>
-        <Header/>
+        <Header logged_in={logged_in} sign_in_route={sign_in_route} sign_out_route={sign_out_route}/>
         <Link to="/new-apartment" >New Apartment</Link>
 
-        {logged_in &&
+        {/* {logged_in &&
           <div>
             <a href={sign_out_route}>Sign Out</a>
           </div>
@@ -134,7 +148,7 @@ class App extends React.Component {
           <div>
             <a href={sign_in_route}>Sign In</a>
           </div>
-        }        
+        }         */}
 
        
           <Route path="/new-apartment" render={ (props) => {
@@ -143,14 +157,22 @@ class App extends React.Component {
                     )}} />
           <Route exact path="/" render={ (props) => <AptIndex apartments={this.state.apartments}  /> } />
           {/* <Route exact path="/apartments" render= {this.state.apts} /> */}
-          <Route exact path="/apartment/:id" render={ (props) => <AptShow {...props} apts={ apartments } handleDelete={this.handleDelete}/> }/>
-          <Route path= "/edit-apartment/:id" render={ (props) => {
+          <Route exact path="/apts/:id" render={ (props) => <AptShow {...props} apts={ apartments } handleDelete={this.handleDelete}/> }/>
+          {/* <Route path= "/apts/:id/edit" render={ (props) => {
                   return(
                     <EditApartment
-                      {...props}
-                      onSubmit={this.editApartment}
+
+                      // {...props}
+                      // onSubmit={this.editApartment}
                     /> )
-                  }} />
+                  }} /> */}
+
+            <Route
+            exact path="/apts/:id/edit"
+            render={ (props) => <EditApartment
+              apartments={ this.state.apartments }
+              getApartments={ this.getApartments }
+          /> } />
 
         </div>
       </Router>

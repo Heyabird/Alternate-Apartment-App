@@ -23,7 +23,7 @@ class AptIndex extends Component{
                         {apartments.map((apt, index) => {
                             return(
                             <ListGroup id="item" key={ index }>
-                                <a href={`/apt/${apt.id}`}>{apt.city}<h4 id= "name"> { apt.street }</h4></a>
+                                <a href={`/apts/${apt.id}`}>{apt.city}<h4 id= "name"> { apt.street }</h4></a>
                                 <br/>
                                 <img src={ TurtleShell }/>
                                 <br/>

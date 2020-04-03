@@ -19,7 +19,7 @@ class AptShow extends Component {
         {/* "Poor man's if statement" */}
         {apt &&
         <div>
-            <a href={apts_route} id="button">Back Home</a>
+            <Link to="/" id="button">Back Home</Link>
             <div>
                 <ListGroup>
                     <br/>
@@ -37,7 +37,7 @@ class AptShow extends Component {
                     <small>Contact hours:{ apt.manager_contact_hours}</small>
                     <br/>
                     {/* <Link to={`/apt/${apt.id}`}>Test</Link> */}
-                    <Button><Link to={`/edit-apartment/${apt.id}`}>Edit</Link></Button>
+                    <Button><Link to={`/apts/${apt.id}/edit`}>Edit</Link></Button>
                     <br/>
                     <Button onClick={() => this.props.handleDelete(apt.id)} >Delete</Button>
 
